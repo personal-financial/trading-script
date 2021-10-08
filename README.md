@@ -1,10 +1,12 @@
-# trading-script
+# Trading Script
 install Libs
+source venv/bin/activate
 pip3 install -r requirements.txt
 
-# recreate virtualenv
+# Recreate Virtualenv
 virtualenv venv
 source venv/bin/activate
 deactivate
 
-pip3 install -r requirements.txt
+# Run Elasticsearch
+sudo systemctl start elasticsearch
