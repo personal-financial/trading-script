@@ -2,17 +2,20 @@ from .binarycounthelper import read_file
 from utils.database.connection import DatabaseConnection
 
 # read_file("./../assets/ETHUSD_H1_202103230000_202109242300.xlsx");
-def run(di):
+def run(di, migration):
     try:
         init_ins(di)
-        binary_count(di)
-    except:
-        print("binary count run error")
+        if(migration == 'down'):
+            down(di)
+        else:
+            up(di)
+    except NameError:
+        print("binary count migrate error")
+        print(NameError)
     finally:
         end_process(di)
 
-def binary_count(di):
-    print('binary count run')
+def up(di):
     dc = di.get_ins('database')
     connection = dc.get_connection()
     create_reviewers_table_query = """
@@ -25,6 +28,18 @@ def binary_count(di):
     with connection.cursor() as cursor:
         cursor.execute(create_reviewers_table_query)
         connection.commit()
+    print("binary count migrate success")
+
+def down(di):
+    dc = di.get_ins('database')
+    connection = dc.get_connection()
+    create_reviewers_table_query = """
+    DROP TABLE candlestick
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(create_reviewers_table_query)
+        connection.commit()
+    print("binary count migrate reverted")
 
 def init_ins(di):
     database_connection = DatabaseConnection()

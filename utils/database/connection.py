@@ -1,8 +1,15 @@
 import mysql.connector
 
-def connect_database():
-    cnx = mysql.connector.connect(user='root', password='Loc2002_bl',
+class DatabaseConnection:
+    def __init__(self):
+        self.connection = None
+    
+    def connect(self):
+        self.connection = mysql.connector.connect(user='root', password='Loc2002_bl',
                                 host='127.0.0.1',
                                 database='trading')
-    cnx.close()
-    return cnx
+    def get_connection(self):
+        return self.connection
+        
+    def close(self):
+        self.connection.close()
