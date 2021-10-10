@@ -21,8 +21,16 @@ def up(di):
     create_reviewers_table_query = """
     CREATE TABLE candlestick (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        first_name VARCHAR(100),
-        last_name VARCHAR(100)
+        pair_name VARCHAR(100),
+        time VARCHAR(100),
+        time_line DATETIME,
+        open_price DECIMAL,
+        high_price DECIMAL,
+        low_price DECIMAL,
+        close_price DECIMAL,
+        tick_vol INT,
+        vol INT,
+        spread INT
     )
     """
     with connection.cursor() as cursor:
